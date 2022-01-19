@@ -14,6 +14,7 @@ class TodoList extends StatelessWidget {
       title: 'Flutter Demo',
       theme: ThemeData(
         primarySwatch: Colors.blue,
+        fontFamily: 'ShadowsIntoLight',
       ),
       home: const AllTasks(title: 'Flutter Demo Home Page'),
     );
