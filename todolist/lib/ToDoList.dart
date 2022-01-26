@@ -7,18 +7,13 @@ class TodoList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var tasks = getRandTasks();
-    for (var item in tasks) {
-      print(
-          "ID:${item.id} | Content:${item.content} | Completed:${item.completed} | Created At:${item.createdAt}");
-    }
     return MaterialApp(
       title: 'Todo List',
       theme: ThemeData(
         primarySwatch: Colors.deepOrange,
         fontFamily: 'ShadowsIntoLight',
       ),
-      home: const AllTasks(title: 'Todo List'),
+      home: new AllTasks(),
     );
   }
 }

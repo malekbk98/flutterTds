@@ -1,46 +1,30 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:flutter/material.dart';
+import 'package:todolist/data/tasks.dart';
 
-class AllTasks extends StatefulWidget {
-  const AllTasks({Key? key, required this.title}) : super(key: key);
-  final String title;
-
-  @override
-  State<AllTasks> createState() => _AllTasksState();
-}
-
-class _AllTasksState extends State<AllTasks> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
-
+class AllTasks extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    var tasks = getRandTasks();
     return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
+      appBar: AppBar(title: Text("All tasks")),
+      body: ListView.builder(
+        itemCount: tasks.length,
+        itemBuilder: (BuildContext context, int index) {
+          return ListTile(
+            trailing: Text(
+              "${tasks[index].createdAt}",
+              style: TextStyle(
+                  color: tasks[index].completed ? Colors.green : Colors.red,
+                  fontSize: 15),
             ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
+            title: Text(
+              "${tasks[index].content}",
+              style: TextStyle(fontFamily: 'arial', fontSize: 20),
             ),
-          ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
+          );
+        },
       ),
     );
   }
