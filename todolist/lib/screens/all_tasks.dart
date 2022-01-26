@@ -1,14 +1,16 @@
-// ignore_for_file: prefer_const_constructors
-
 import 'package:flutter/material.dart';
 import 'package:todolist/data/tasks.dart';
 
 class AllTasks extends StatelessWidget {
+  const AllTasks({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     var tasks = getRandTasks();
     return Scaffold(
-      appBar: AppBar(title: Text("All tasks")),
+      appBar: AppBar(
+        title: const Text("All tasks"),
+      ),
       body: ListView.builder(
         itemCount: tasks.length,
         itemBuilder: (BuildContext context, int index) {
@@ -21,7 +23,7 @@ class AllTasks extends StatelessWidget {
             ),
             title: Text(
               "${tasks[index].content}",
-              style: TextStyle(fontFamily: 'arial', fontSize: 20),
+              style: const TextStyle(fontFamily: 'arial', fontSize: 20),
             ),
           );
         },

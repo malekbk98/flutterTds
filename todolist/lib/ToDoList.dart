@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:todolist/data/tasks.dart';
 import 'package:todolist/screens/all_tasks.dart';
 
 class TodoList extends StatelessWidget {
@@ -13,7 +12,7 @@ class TodoList extends StatelessWidget {
         primarySwatch: Colors.deepOrange,
         fontFamily: 'ShadowsIntoLight',
       ),
-      home: new AllTasks(),
+      home: const AllTasks(),
     );
   }
 }
