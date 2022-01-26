@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:todolist/data/tasks.dart';
 import 'package:todolist/screens/all_tasks.dart';
 
 class TodoList extends StatelessWidget {
@@ -6,13 +7,18 @@ class TodoList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var tasks = getRandTasks();
+    for (var item in tasks) {
+      print(
+          "ID:${item.id} | Content:${item.content} | Completed:${item.completed} | Created At:${item.createdAt}");
+    }
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Todo List',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.deepOrange,
         fontFamily: 'ShadowsIntoLight',
       ),
-      home: const AllTasks(title: 'Flutter Demo Home Page'),
+      home: const AllTasks(title: 'Todo List'),
     );
   }
 }

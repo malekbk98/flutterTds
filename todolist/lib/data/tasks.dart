@@ -1,30 +1,15 @@
-import 'package:flutter/material.dart';
+import 'package:faker/faker.dart';
+import 'package:todolist/models/Task.dart';
 
-class Tasks extends StatefulWidget {
-  const Tasks({Key? key, required this.title}) : super(key: key);
-  final String title;
+late List<Task> tasksList;
 
-  @override
-  State<Tasks> createState() => _TasksState();
-}
+//Create random/fake tasks
+List getRandTasks() {
+  var faker = Faker();
+  tasksList = List<Task>.generate(
+      15,
+      (int index) => Task(random.integer(9999), faker.lorem.sentence(),
+          random.boolean(), faker.date.dateTime(minYear: 2020, maxYear: 2022)));
 
-class _TasksState extends State<Tasks> {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'Data tasks',
-            ),
-          ],
-        ),
-      ),
-    );
-  }
+  return tasksList;
 }
