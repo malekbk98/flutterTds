@@ -1,29 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:todolist/components/tasks/task_preview.dart';
+import 'package:todolist/models/Task.dart';
 
-class TaskMaster extends StatefulWidget {
-  const TaskMaster({Key? key, required this.title}) : super(key: key);
-  final String title;
-
-  @override
-  State<TaskMaster> createState() => _TaskMasterState();
-}
-
-class _TaskMasterState extends State<TaskMaster> {
+class TaskMaster extends StatelessWidget {
+  const TaskMaster({Key? key, required this.tasks}) : super(key: key);
+  //constrcuteur
+  final List<Task> tasks;
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'Components/Tasks TaskMaster',
-            ),
-          ],
-        ),
+    return Center(
+      child: ListView.builder(
+        itemCount: tasks.length,
+        itemBuilder: (context, index) {
+          return TaskPreview(task: tasks[index]);
+        },
       ),
     );
   }

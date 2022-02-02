@@ -12,7 +12,7 @@ class TodoList extends StatelessWidget {
         primarySwatch: Colors.deepOrange,
         fontFamily: 'ShadowsIntoLight',
       ),
-      home: const AllTasks(),
+      home: const AllTasks(title: 'All tasks'),
     );
   }
 }
