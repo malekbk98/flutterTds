@@ -1,30 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:todolist/models/Task.dart';
 
-class TaskDetail extends StatefulWidget {
-  const TaskDetail({Key? key, required this.title}) : super(key: key);
-  final String title;
+class TaskDetail extends StatelessWidget {
+  const TaskDetail({Key? key, required this.task}) : super(key: key);
+  final Task task;
 
-  @override
-  State<TaskDetail> createState() => _TaskDetailState();
-}
-
-class _TaskDetailState extends State<TaskDetail> {
-  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
-      body: Center(
+    return Center(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'Components/Tasks TaskDetail',
-            ),
-          ],
+      children: [
+        Text(
+          task.content,
+          style: const TextStyle(fontFamily: 'arial', fontSize: 20),
         ),
-      ),
-    );
+        Text(
+          task.createdAt.toString(),
+        ),
+        Text(
+          task.completed.toString(),
+          style: TextStyle(color: task.completed ? Colors.green : Colors.red),
+        ),
+      ],
+    ));
   }
 }

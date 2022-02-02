@@ -1,5 +1,6 @@
 import 'package:faker/faker.dart';
 import 'package:flutter/material.dart';
+import 'package:todolist/components/tasks/task_detail.dart';
 import 'package:todolist/data/tasks.dart' as data;
 import 'package:todolist/components/tasks/task_master.dart';
 import 'package:todolist/models/Task.dart';
@@ -17,11 +18,24 @@ class AllTasks extends StatefulWidget {
 class _AllTasksState extends State<AllTasks> {
   @override
   Widget build(BuildContext context) {
+    late Task clickedTask;
+
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
       ),
-      body: TaskMaster(tasks: data.tasks),
+      body: Column(
+        children: [
+          TaskDetail(task: clickedTask),
+          TaskMaster(
+              tasks: data.tasks,
+              clickedTask: (Task task) {
+                setState(() {
+                  clickedTask = task;
+                });
+              }),
+        ],
+      ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           AddRandTask();

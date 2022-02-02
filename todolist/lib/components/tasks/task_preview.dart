@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:todolist/models/Task.dart';
 
+typedef void IntCallback(int id);
+
 class TaskPreview extends StatelessWidget {
-  const TaskPreview({Key? key, required this.task}) : super(key: key);
+  const TaskPreview({Key? key, required this.task, required this.clickedTask})
+      : super(key: key);
   final Task task;
+  final Function clickedTask;
+
   @override
   Widget build(BuildContext context) {
     return ListTile(
@@ -21,7 +26,9 @@ class TaskPreview extends StatelessWidget {
               Icons.check_box_rounded,
               color: Colors.green,
             ),
-      onTap: () {},
+      onTap: () {
+        clickedTask(task);
+      },
     );
   }
 }
