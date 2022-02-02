@@ -16,7 +16,6 @@ class AllTasks extends StatefulWidget {
 
 class _AllTasksState extends State<AllTasks> {
   @override
-  List<Task> tasks = data.tasks;
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
