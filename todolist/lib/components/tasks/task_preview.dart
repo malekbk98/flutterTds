@@ -19,12 +19,12 @@ class TaskPreview extends StatelessWidget {
       subtitle: Text('Created at ${task.createdAt}'),
       trailing: task.completed
           ? const Icon(
-              Icons.check_box_outline_blank_rounded,
-              color: Colors.red,
-            )
-          : const Icon(
               Icons.check_box_rounded,
               color: Colors.green,
+            )
+          : const Icon(
+              Icons.check_box_outline_blank_rounded,
+              color: Colors.red,
             ),
       onTap: () {
         clickedTask(task);

@@ -16,25 +16,33 @@ class AllTasks extends StatefulWidget {
 }
 
 class _AllTasksState extends State<AllTasks> {
+  Task? clickedTask;
+  bool initTask = false;
+
   @override
   Widget build(BuildContext context) {
-    late Task clickedTask;
-
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
       ),
-      body: Column(
-        children: [
-          TaskDetail(task: clickedTask),
-          TaskMaster(
-              tasks: data.tasks,
-              clickedTask: (Task task) {
-                setState(() {
-                  clickedTask = task;
-                });
-              }),
-        ],
+      body: Center(
+        child: Column(
+          children: <Widget>[
+            if (clickedTask != null) TaskDetail(task: clickedTask),
+            Flexible(
+              child: TaskMaster(
+                tasks: data.tasks,
+                clickedTask: (Task task) {
+                  setState(
+                    () {
+                      clickedTask = task;
+                    },
+                  );
+                },
+              ),
+            ),
+          ],
+        ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {

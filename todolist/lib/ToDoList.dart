@@ -10,7 +10,7 @@ class TodoList extends StatelessWidget {
       title: 'Todo List',
       theme: ThemeData(
         primarySwatch: Colors.deepOrange,
-        fontFamily: 'ShadowsIntoLight',
+        fontFamily: 'Sans Serif',
       ),
       home: const AllTasks(title: 'All tasks'),
     );
