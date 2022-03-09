@@ -17,7 +17,6 @@ class AllTasks extends StatefulWidget {
 
 class _AllTasksState extends State<AllTasks> {
   Task? clickedTask;
-  bool initTask = false;
 
   @override
   Widget build(BuildContext context) {
@@ -32,10 +31,16 @@ class _AllTasksState extends State<AllTasks> {
             Flexible(
               child: TaskMaster(
                 tasks: data.tasks,
+                clicked: clickedTask,
                 clickedTask: (Task task) {
                   setState(
                     () {
-                      clickedTask = task;
+                      //click 1 to show task | click 2 to hide task
+                      if (task == clickedTask) {
+                        clickedTask = null;
+                      } else {
+                        clickedTask = task;
+                      }
                     },
                   );
                 },
@@ -46,7 +51,7 @@ class _AllTasksState extends State<AllTasks> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          AddRandTask();
+          addRandTask();
         },
         tooltip: 'Add a task',
         child: const Icon(Icons.add),
@@ -54,7 +59,7 @@ class _AllTasksState extends State<AllTasks> {
     );
   }
 
-  void AddRandTask() {
+  void addRandTask() {
     var faker = Faker();
     var task = Task(
       random.integer(9999),
@@ -63,7 +68,7 @@ class _AllTasksState extends State<AllTasks> {
       faker.date.dateTime(minYear: 2020, maxYear: 2022),
     );
     setState(() {
-      data.tasks.add(task);
+      data.tasks.insert(0, task);
     });
   }
 }

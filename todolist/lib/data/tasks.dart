@@ -3,7 +3,7 @@ import 'package:todolist/models/Task.dart';
 
 var faker = Faker();
 List<Task> tasks = List<Task>.generate(
-  2,
+  15,
   (int index) => Task(
     random.integer(9999),
     faker.lorem.sentence(),

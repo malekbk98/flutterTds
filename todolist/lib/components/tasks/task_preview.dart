@@ -4,14 +4,20 @@ import 'package:todolist/models/Task.dart';
 typedef void IntCallback(int id);
 
 class TaskPreview extends StatelessWidget {
-  const TaskPreview({Key? key, required this.task, required this.clickedTask})
+  const TaskPreview(
+      {Key? key,
+      required this.task,
+      required this.clickedTask,
+      required this.selected})
       : super(key: key);
   final Task task;
   final Function clickedTask;
+  final bool selected;
 
   @override
   Widget build(BuildContext context) {
     return ListTile(
+      tileColor: selected ? Colors.green : Colors.white,
       title: Text(
         task.content,
         style: const TextStyle(fontFamily: 'arial', fontSize: 20),
