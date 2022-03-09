@@ -49,7 +49,18 @@ class TaskDetail extends StatelessWidget {
                 Expanded(
                   child: RaisedButton(
                     onPressed: () {
-                      deletedTask(task);
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content:
+                              const Text('Please confirm deleting this task'),
+                          action: SnackBarAction(
+                            label: 'Confirm',
+                            onPressed: () {
+                              deletedTask(task);
+                            },
+                          ),
+                        ),
+                      );
                     },
                     child: const Text("Delete"),
                     color: Colors.red[300],
@@ -66,7 +77,7 @@ class TaskDetail extends StatelessWidget {
                   ),
                 ),
               ],
-            )
+            ),
           ],
         ),
       ),
