@@ -27,7 +27,21 @@ class _AllTasksState extends State<AllTasks> {
       body: Center(
         child: Column(
           children: <Widget>[
-            if (clickedTask != null) TaskDetail(task: clickedTask),
+            if (clickedTask != null)
+              TaskDetail(
+                task: clickedTask,
+                deletedTask: (Task task) {
+                  setState(
+                    () {
+                      //Remove deleted task from tasks list
+                      data.tasks.remove(task);
+
+                      //Hide task details
+                      clickedTask = null;
+                    },
+                  );
+                },
+              ),
             Flexible(
               child: TaskMaster(
                 tasks: data.tasks,

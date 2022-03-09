@@ -1,9 +1,16 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:flutter/material.dart';
 import 'package:todolist/models/Task.dart';
 
 class TaskDetail extends StatelessWidget {
-  const TaskDetail({Key? key, required this.task}) : super(key: key);
+  const TaskDetail({
+    Key? key,
+    required this.task,
+    required this.deletedTask,
+  }) : super(key: key);
   final Task? task;
+  final Function deletedTask;
 
   @override
   Widget build(BuildContext context) {
@@ -33,6 +40,29 @@ class TaskDetail extends StatelessWidget {
                     color: Color.fromARGB(255, 43, 43, 43),
                     fontFamily: 'arial',
                     fontSize: 15,
+                  ),
+                ),
+              ],
+            ),
+            Row(
+              children: <Widget>[
+                Expanded(
+                  child: RaisedButton(
+                    onPressed: () {
+                      deletedTask(task);
+                    },
+                    child: const Text("Delete"),
+                    color: Colors.red[300],
+                    textColor: Colors.white,
+                  ),
+                ),
+                const SizedBox(width: 50), //Spacer
+                Expanded(
+                  child: RaisedButton(
+                    onPressed: () {},
+                    child: const Text("Update"),
+                    color: Colors.orange[300],
+                    textColor: Colors.white,
                   ),
                 ),
               ],

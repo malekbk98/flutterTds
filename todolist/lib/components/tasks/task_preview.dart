@@ -17,7 +17,7 @@ class TaskPreview extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      tileColor: selected ? Colors.green : Colors.white,
+      tileColor: selected ? Color.fromARGB(255, 204, 211, 205) : Colors.white,
       title: Text(
         task.content,
         style: const TextStyle(fontFamily: 'arial', fontSize: 20),
