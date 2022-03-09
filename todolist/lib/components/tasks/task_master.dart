@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:todolist/components/tasks/task_preview.dart';
 import 'package:todolist/models/Task.dart';
-import 'package:todolist/screens/all_tasks.dart' as allTasksScreen;
 
 class TaskMaster extends StatelessWidget {
   const TaskMaster(

@@ -56,7 +56,7 @@ class TaskDetail extends StatelessWidget {
                           action: SnackBarAction(
                             label: 'Confirm',
                             onPressed: () {
-                              deletedTask(task);
+                              deletedTask();
                             },
                           ),
                         ),
