@@ -70,7 +70,13 @@ class TaskDetail extends StatelessWidget {
                 const SizedBox(width: 50), //Spacer
                 Expanded(
                   child: RaisedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.pushNamed(
+                        context,
+                        '/one_task',
+                        arguments: task,
+                      );
+                    },
                     child: const Text("Update"),
                     color: Colors.orange[300],
                     textColor: Colors.white,

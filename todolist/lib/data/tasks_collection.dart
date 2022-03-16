@@ -19,8 +19,8 @@ class TasksCollection extends ChangeNotifier {
   }
 
   //Update task
-  void update(Task task) {
-    int index = _tasks.indexOf(task);
+  void updateTask(Task task) {
+    int index = _tasks.indexWhere((t) => t.id == task.id);
     _tasks[index] = task;
     notifyListeners();
   }
