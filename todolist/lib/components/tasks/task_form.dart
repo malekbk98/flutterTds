@@ -5,9 +5,11 @@ import 'package:select_form_field/select_form_field.dart';
 class TaskForm extends StatefulWidget {
   const TaskForm({
     Key? key,
+    this.task,
     required this.updateTask,
-  }) : super(key: key); //constrcuteur
+  }) : super(key: key);
 
+  final Task? task;
   final Function updateTask;
 
   @override
@@ -15,16 +17,21 @@ class TaskForm extends StatefulWidget {
 }
 
 class _TaskFormState extends State<TaskForm> {
-  Task? clickedTask;
-  late String taskStatus;
+  String taskStatus = "false";
+  TextEditingController taskDesc = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.task != null) {
+      taskDesc = TextEditingController(text: widget.task!.content);
+      taskStatus = widget.task!.completed.toString();
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    final Task? task = ModalRoute.of(context)!.settings.arguments as Task?;
-    taskStatus = task!.completed.toString();
     final _formKey = GlobalKey<FormState>();
-    TextEditingController taskDesc = TextEditingController();
-    taskDesc = TextEditingController(text: task.content);
 
     return Scaffold(
       body: Center(
@@ -76,15 +83,19 @@ class _TaskFormState extends State<TaskForm> {
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {
                     widget.updateTask(
-                      Task(
-                        task.id,
-                        taskDesc.text,
-                        taskStatus.toLowerCase() == 'true',
-                        DateTime.now(),
-                      ),
+                      taskDesc.text,
+                      taskStatus.toLowerCase() == 'true',
                     );
+                    var msg;
+                    if (widget.task != null) {
+                      msg = "Task updated";
+                    } else {
+                      msg = "Task added";
+                    }
                     ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text('Task updated')),
+                      SnackBar(
+                        content: Text(msg),
+                      ),
                     );
                     Navigator.pushNamed(
                       context,

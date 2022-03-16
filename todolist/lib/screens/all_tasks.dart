@@ -78,15 +78,9 @@ class _AllTasksState extends State<AllTasks> {
   }
 
   void addRandTask() {
-    var faker = Faker();
-    var task = Task(
-      random.integer(9999),
-      faker.lorem.sentence(),
-      random.boolean(),
-      faker.date.dateTime(minYear: 2020, maxYear: 2022),
+    Navigator.pushNamed(
+      context,
+      '/create_task',
     );
-    setState(() {
-      data.tasks.insert(0, task);
-    });
   }
 }

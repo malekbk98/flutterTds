@@ -1,29 +1,41 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:todolist/models/Task.dart';
+import '../components/tasks/task_form.dart';
+import '../data/tasks_collection.dart';
 
 class CreateTask extends StatefulWidget {
-  const CreateTask({Key? key, required this.title}) : super(key: key);
+  const CreateTask({Key? key, required this.title})
+      : super(key: key); //constrcuteur
+
   final String title;
 
   @override
-  State<CreateTask> createState() => _CreateTaskState();
+  _CreateTaskState createState() => _CreateTaskState();
 }
 
 class _CreateTaskState extends State<CreateTask> {
+  Task? clickedTask;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'Screens CreateTask',
-            ),
-          ],
-        ),
+      body: Consumer<TasksCollection>(
+        builder: (context, tasksCollection, child) {
+          return TaskForm(
+            updateTask: (desc, status) {
+              setState(() {
+                int id = tasksCollection.getAllTasks().length + 1;
+                tasksCollection.addTask(
+                  Task(id, desc, status, DateTime.now()),
+                );
+              });
+            },
+          );
+        },
       ),
     );
   }

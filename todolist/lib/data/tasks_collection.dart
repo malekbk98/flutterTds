@@ -7,14 +7,13 @@ class TasksCollection extends ChangeNotifier {
   final List<Task> _tasks = data.tasks;
 
   //Add task
-  void add(Task task) {
+  void addTask(Task task) {
     _tasks.insert(0, task);
     notifyListeners();
   }
 
   //get all tasks
   List<Task> getAllTasks() {
-    print('ok');
     return _tasks;
   }
 
