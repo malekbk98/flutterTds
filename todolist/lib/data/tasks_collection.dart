@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import '../models/Task.dart';
@@ -31,15 +33,19 @@ class TasksCollection extends ChangeNotifier {
 
   //Fetch tasks
   fetchTasks() async {
-    var response =
-        await Dio().get("https://jsonplaceholder.typicode.com/todos");
+    var response = await Dio().get(
+      "https://jsonplaceholder.typicode.com/todos",
+      options: Options(
+        headers: {
+          Headers.contentTypeHeader: 'application/json',
+          Headers.acceptHeader: 'application/json'
+        },
+      ),
+    );
+
     if (response.statusCode == 200) {
-      var data = response.data;
-      for (var t in data) {
-        addTask(
-          Task(t["id"], t["title"], t["completed"], DateTime.now()),
-        );
-      }
+      List data = response.data;
+      _tasks.addAll(data.map((i) => Task.fromJson(i)).toList());
     } else {
       throw Exception('Failed to load main zone');
     }
