@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import '../models/Task.dart';
@@ -7,7 +5,7 @@ import '../models/Task.dart';
 class TasksCollection extends ChangeNotifier {
   List<Task> _tasks = [];
 
-  //Fetch tasks
+  //Fetch tasks from api
   fetchTasks() async {
     var response = await Dio().get(
       "https://jsonplaceholder.typicode.com/todos",
@@ -52,7 +50,7 @@ class TasksCollection extends ChangeNotifier {
     notifyListeners();
   }
 
-  //get all tasks
+  //Get all tasks (locally stored [getter])
   List<Task> getAllTasks() {
     return _tasks;
   }
