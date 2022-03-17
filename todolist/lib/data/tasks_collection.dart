@@ -1,10 +1,9 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:todolist/data/tasks.dart' as data;
-
 import '../models/Task.dart';
 
 class TasksCollection extends ChangeNotifier {
-  final List<Task> _tasks = data.tasks;
+  final List<Task> _tasks = [];
 
   //Add task
   void addTask(Task task) {
@@ -28,5 +27,21 @@ class TasksCollection extends ChangeNotifier {
   void del(Task task) {
     _tasks.remove(task);
     notifyListeners();
+  }
+
+  //Fetch tasks
+  fetchTasks() async {
+    var response =
+        await Dio().get("https://jsonplaceholder.typicode.com/todos");
+    if (response.statusCode == 200) {
+      var data = response.data;
+      for (var t in data) {
+        addTask(
+          Task(t["id"], t["title"], t["completed"], DateTime.now()),
+        );
+      }
+    } else {
+      throw Exception('Failed to load main zone');
+    }
   }
 }

@@ -4,10 +4,13 @@ import 'package:todolist/data/tasks_collection.dart';
 
 import 'ToDoList.dart';
 
-void main() {
+Future<void> main() async {
+  var tasksCollection = TasksCollection();
+  await tasksCollection.fetchTasks();
+
   runApp(
     ChangeNotifierProvider(
-      create: (context) => TasksCollection(),
+      create: (context) => tasksCollection,
       child: const TodoList(),
     ),
   );
