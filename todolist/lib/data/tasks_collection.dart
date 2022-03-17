@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import '../models/Task.dart';
@@ -18,9 +20,10 @@ class TasksCollection extends ChangeNotifier {
     );
 
     if (response.statusCode == 200) {
-      print('ok--');
-
+      //Erase previous tasks
       _tasks = [];
+
+      //Add tasks to _tasks
       List data = response.data;
       _tasks.addAll(data.map((i) => Task.fromJson(i)).toList());
       notifyListeners();
@@ -29,25 +32,14 @@ class TasksCollection extends ChangeNotifier {
     }
   }
 
-  //Delete task from api
-  Future<bool> delTaskApi(id) async {
-    var response = await Dio().delete(
-      "https://jsonplaceholder.typicode.com/todos/" + id.toString(),
-      options: Options(
-        headers: {
-          Headers.contentTypeHeader: 'application/json',
-          Headers.acceptHeader: 'application/json'
-        },
-      ),
-    );
-
-    return response.statusCode == 200;
-  }
-
   //Add task
   void addTask(Task task) {
+    //add task to _tasks (old version of code before using api)
+    /**
+     * Note please: I left the next line because the API doesn't support changes, so the following code line is just for demonstration :) .
+     */
     _tasks.insert(0, task);
-    notifyListeners();
+    //notifyListeners(); //No need for this since fetchTasks will be called
   }
 
   //Get all tasks (locally stored [getter])
@@ -56,25 +48,69 @@ class TasksCollection extends ChangeNotifier {
   }
 
   //Update task
-  void updateTask(Task task) {
+  Future<bool> updateTask(Task task) async {
+    //Update task from _tasks (old version of code before using api)
+    /**
+     * Note please: I left the next line because the API doesn't support changes, so the following code line is just for demonstration :) .
+     */
     int index = _tasks.indexWhere((t) => t.id == task.id);
     _tasks[index] = task;
-    notifyListeners();
+    //notifyListeners(); //No need for this since fetchTasks will be called
+
+    //update task with api
+    var taskData = {
+      "id": task.id.toString(),
+      "title": task.content,
+      "completed": task.completed,
+    };
+
+    var response = await Dio().put(
+      "https://jsonplaceholder.typicode.com/todos/" + task.id.toString(),
+      options: Options(
+        headers: {
+          Headers.contentTypeHeader: 'application/json',
+          Headers.acceptHeader: 'application/json'
+        },
+      ),
+      data: taskData,
+    );
+
+    //Return response
+    if (response.statusCode == 200) {
+      //Refresh tasks
+      await fetchTasks();
+      return true;
+    }
+
+    return false;
   }
 
   //Delete task
   Future<bool> del(Task task) async {
-    //Remove task from tasks Lists (old version of code before using api)
+    //Remove task from _tasks (old version of code before using api)
     /**
      * Note please: I left the next line because the API doesn't support changes, so the following code line is just for demonstration :) .
      */
     _tasks.remove(task);
+    //notifyListeners(); //No need for this since fetchTasks will be called
 
     //Delete task with api
-    bool response = await delTaskApi(task.id);
+    var response = await Dio().delete(
+      "https://jsonplaceholder.typicode.com/todos/" + task.id.toString(),
+      options: Options(
+        headers: {
+          Headers.contentTypeHeader: 'application/json',
+          Headers.acceptHeader: 'application/json'
+        },
+      ),
+    );
 
-    //Refresh tasks
-    await fetchTasks();
-    return response;
+    //Return response
+    if (response.statusCode == 200) {
+      //Refresh tasks
+      await fetchTasks();
+      return true;
+    }
+    return false;
   }
 }
