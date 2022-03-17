@@ -5,7 +5,46 @@ import 'package:flutter/material.dart';
 import '../models/Task.dart';
 
 class TasksCollection extends ChangeNotifier {
-  final List<Task> _tasks = [];
+  List<Task> _tasks = [];
+
+  //Fetch tasks
+  fetchTasks() async {
+    var response = await Dio().get(
+      "https://jsonplaceholder.typicode.com/todos",
+      options: Options(
+        headers: {
+          Headers.contentTypeHeader: 'application/json',
+          Headers.acceptHeader: 'application/json'
+        },
+      ),
+    );
+
+    if (response.statusCode == 200) {
+      print('ok--');
+
+      _tasks = [];
+      List data = response.data;
+      _tasks.addAll(data.map((i) => Task.fromJson(i)).toList());
+      notifyListeners();
+    } else {
+      throw Exception('Failed to load tasks');
+    }
+  }
+
+  //Delete task from api
+  Future<bool> delTaskApi(id) async {
+    var response = await Dio().delete(
+      "https://jsonplaceholder.typicode.com/todos/" + id.toString(),
+      options: Options(
+        headers: {
+          Headers.contentTypeHeader: 'application/json',
+          Headers.acceptHeader: 'application/json'
+        },
+      ),
+    );
+
+    return response.statusCode == 200;
+  }
 
   //Add task
   void addTask(Task task) {
@@ -27,47 +66,17 @@ class TasksCollection extends ChangeNotifier {
 
   //Delete task
   Future<bool> del(Task task) async {
+    //Remove task from tasks Lists (old version of code before using api)
+    /**
+     * Note please: I left the next line because the API doesn't support changes, so the following code line is just for demonstration :) .
+     */
     _tasks.remove(task);
-    notifyListeners();
-    return await delTaskApi(task.id);
-  }
 
-  //Fetch tasks
-  fetchTasks() async {
-    var response = await Dio().get(
-      "https://jsonplaceholder.typicode.com/todos",
-      options: Options(
-        headers: {
-          Headers.contentTypeHeader: 'application/json',
-          Headers.acceptHeader: 'application/json'
-        },
-      ),
-    );
+    //Delete task with api
+    bool response = await delTaskApi(task.id);
 
-    if (response.statusCode == 200) {
-      List data = response.data;
-      _tasks.addAll(data.map((i) => Task.fromJson(i)).toList());
-    } else {
-      throw Exception('Failed to load tasks');
-    }
-  }
-
-  //Delete task from api
-  Future<bool> delTaskApi(id) async {
-    var response = await Dio().delete(
-      "https://jsonplaceholder.typicode.com/todos/" + id.toString(),
-      options: Options(
-        headers: {
-          Headers.contentTypeHeader: 'application/json',
-          Headers.acceptHeader: 'application/json'
-        },
-      ),
-    );
-
-    if (response.statusCode == 200) {
-      return true;
-    } else {
-      return false;
-    }
+    //Refresh tasks
+    await fetchTasks();
+    return response;
   }
 }

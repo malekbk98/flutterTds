@@ -36,15 +36,25 @@ class _AllTasksState extends State<AllTasks> {
                     deletedTask: () {
                       setState(
                         () {
+                          String msg = "";
+                          //Wait until api response (async)
                           tasksCollection.del(clickedTask!).then((value) {
                             if (value == true) {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                  content: Text("Task deleted"),
-                                ),
-                              );
+                              //Success delete from api
+                              msg = "Task deleted";
+                            } else {
+                              //Api response !=200
+                              msg = "Ops! Something went wrong, Try again";
                             }
+
+                            //Show msg
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text(msg),
+                              ),
+                            );
                           });
+
                           //Hide task details
                           clickedTask = null;
                         },
