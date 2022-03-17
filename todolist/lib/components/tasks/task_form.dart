@@ -82,25 +82,44 @@ class _TaskFormState extends State<TaskForm> {
               ElevatedButton(
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {
-                    widget.updateTask(
-                      taskDesc.text,
-                      taskStatus.toLowerCase() == 'true',
-                    );
-                    var msg;
                     if (widget.task != null) {
-                      msg = "Task updated";
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                        content:
+                            const Text('Please confirm deleting this task'),
+                        action: SnackBarAction(
+                          label: 'Confirm',
+                          onPressed: () {
+                            widget.updateTask(
+                              taskDesc.text,
+                              taskStatus.toLowerCase() == 'true',
+                            );
+                            Navigator.pushNamed(
+                              context,
+                              '/',
+                            );
+                          },
+                        ),
+                      ));
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text("Task updated"),
+                        ),
+                      );
                     } else {
-                      msg = "Task added";
+                      widget.updateTask(
+                        taskDesc.text,
+                        taskStatus.toLowerCase() == 'true',
+                      );
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text("Task added"),
+                        ),
+                      );
+                      Navigator.pushNamed(
+                        context,
+                        '/',
+                      );
                     }
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content: Text(msg),
-                      ),
-                    );
-                    Navigator.pushNamed(
-                      context,
-                      '/',
-                    );
                   }
                 },
                 child: const Text('Submit'),

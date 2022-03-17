@@ -1,8 +1,6 @@
-import 'package:faker/faker.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:todolist/components/tasks/task_detail.dart';
-import 'package:todolist/data/tasks.dart' as data;
 import 'package:todolist/components/tasks/task_master.dart';
 import 'package:todolist/data/tasks_collection.dart';
 import 'package:todolist/models/Task.dart';
@@ -12,6 +10,7 @@ class AllTasks extends StatefulWidget {
       : super(key: key); //constrcuteur
 
   final String title;
+  static String get route => '/all_tasks';
 
   @override
   _AllTasksState createState() => _AllTasksState();

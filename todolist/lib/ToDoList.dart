@@ -16,13 +16,13 @@ class TodoList extends StatelessWidget {
       ),
       initialRoute: '/',
       routes: {
-        '/all_tasks': (context) => const AllTasks(
+        AllTasks.route: (context) => const AllTasks(
               title: 'All tasks',
             ),
-        '/one_task': (context) => const OneTask(
-              title: 'Task preview',
+        OneTask.route: (context) => const OneTask(
+              title: 'Task Update',
             ),
-        '/create_task': (context) => const CreateTask(
+        CreateTask.route: (context) => const CreateTask(
               title: 'Add new task',
             ),
       },

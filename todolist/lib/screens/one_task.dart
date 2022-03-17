@@ -9,6 +9,7 @@ class OneTask extends StatefulWidget {
       : super(key: key); //constrcuteur
 
   final String title;
+  static String get route => '/one_task';
 
   @override
   _OneTaskState createState() => _OneTaskState();

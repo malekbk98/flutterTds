@@ -9,6 +9,7 @@ class CreateTask extends StatefulWidget {
       : super(key: key); //constrcuteur
 
   final String title;
+  static String get route => '/create_task';
 
   @override
   _CreateTaskState createState() => _CreateTaskState();
