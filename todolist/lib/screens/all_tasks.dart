@@ -36,7 +36,15 @@ class _AllTasksState extends State<AllTasks> {
                     deletedTask: () {
                       setState(
                         () {
-                          tasksCollection.del(clickedTask!);
+                          tasksCollection.del(clickedTask!).then((value) {
+                            if (value == true) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  content: Text("Task deleted"),
+                                ),
+                              );
+                            }
+                          });
                           //Hide task details
                           clickedTask = null;
                         },

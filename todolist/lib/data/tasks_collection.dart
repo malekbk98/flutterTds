@@ -26,9 +26,10 @@ class TasksCollection extends ChangeNotifier {
   }
 
   //Delete task
-  void del(Task task) {
+  Future<bool> del(Task task) async {
     _tasks.remove(task);
     notifyListeners();
+    return await delTaskApi(task.id);
   }
 
   //Fetch tasks
@@ -47,7 +48,26 @@ class TasksCollection extends ChangeNotifier {
       List data = response.data;
       _tasks.addAll(data.map((i) => Task.fromJson(i)).toList());
     } else {
-      throw Exception('Failed to load main zone');
+      throw Exception('Failed to load tasks');
+    }
+  }
+
+  //Delete task from api
+  Future<bool> delTaskApi(id) async {
+    var response = await Dio().delete(
+      "https://jsonplaceholder.typicode.com/todos/" + id.toString(),
+      options: Options(
+        headers: {
+          Headers.contentTypeHeader: 'application/json',
+          Headers.acceptHeader: 'application/json'
+        },
+      ),
+    );
+
+    if (response.statusCode == 200) {
+      return true;
+    } else {
+      return false;
     }
   }
 }
